@@ -1,0 +1,69 @@
+﻿@using DATN.DTOs
+@model NhatKySanXuatRequest
+
+@{
+    ViewData["Title"] = "Thêm nhật ký sản xuất";
+}
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Thêm mới nhật ký sản xuất</h4>
+        <form asp-action="ThemMoiNhatKySanXuat" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="MaKhuVuc" class="control-label">Khu vực</label>
+                <select asp-for="MaKhuVuc" asp-items="ViewBag.MaKhuVuc" class="form-control">
+                    <option selected>---Chọn khu vực---</option>
+                </select>
+                <span asp-validation-for="MaKhuVuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKhoVatTu" class="control-label">Kho lưu trữ</label>
+                <select id="warehouse" asp-for="MaKhoVatTu" asp-items="ViewBag.MaKho" class="form-control">
+                    <option selected>---Chọn kho vật tư---</option>
+                </select>
+                <span asp-validation-for="MaKhoVatTu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenVatTu" class="control-label">Tên vật tư</label>
+                <select asp-for="TenVatTu" id="productList" class="form-control">
+                </select>
+                <span asp-validation-for="TenVatTu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongSuDung" class="control-label">Số lượng</label>
+                <input asp-for="SoLuongSuDung" class="form-control" />
+                <span asp-validation-for="SoLuongSuDung" class="text-danger"></span>
+            </div> 
+            <div class="form-group">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachNhatKySanXuat">Quay lại</a>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#warehouse').change(function () {
+                var warehouse = $(this).val();
+                $.ajax({
+                    type: "GET",
+                    url: "/NhatKySanXuats/GetProductsByWarehouse",
+                    data: { warehouse: warehouse },
+                    success: function (response) {
+                        var productList = $('#productList');
+                        productList.empty();
+                        for(var i = 0; i < response.length; i++)
+                        {
+                            productList.append('<option value="' + response[i].tenVatTu + '">' + response[i].tenVatTu + " - số lượng còn " + (response[i].soLuong - response[i].soLuongDaSuDung) + " - " + response[i].trangThai + '</option>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+}

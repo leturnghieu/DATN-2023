@@ -1,0 +1,29 @@
+﻿@model DATN.Models.KhoVatTu
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Chỉnh sửa kho vật tư</h1>
+
+<h4>kho vật tư</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Sua" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="TenKho" class="control-label">Tên kho vật tư</label>
+                <input asp-for="TenKho" class="form-control" />
+                <span asp-validation-for="TenKho" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="DanhSachKhoVatTu" class="btn btn-primary">Quay lại danh sách</a>
+</div>

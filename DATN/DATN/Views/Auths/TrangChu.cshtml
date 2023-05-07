@@ -1,0 +1,251 @@
+﻿@model DATN.DTOs.ChatGPTResponse;
+
+<div class="row">
+
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a asp-action="DanhSachKhuVuc" asp-controller="KhuVucs" class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Tống số khu vực
+                        </a>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TongKhuVuc</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a asp-action="DanhSachNhatKyMuaSam" asp-controller="NhatKyMuaSams" class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Tổng số tiền mua sắm
+                        </a>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TongTienMuaSam</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Earnings (Monthly) Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a asp-action="DanhSachNhatKyBanSanPham" asp-controller="NhatKyBanSanPhams" class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Tổng doanh số
+                        </a>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TongTienBanSanPham</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Requests Card Example -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <a asp-action="DanhSachVatTuHetHan" asp-controller="NhatKyMuaSams" class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Tổng số vật tư hết hạn
+                        </a>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.TongVatTuHetHan</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<div>
+        <h2>Hãy hỏi câu hỏi gì đó bạn thắc mắc?</h2>
+        <form method="post" asp-action="TrangChu">
+            <input type="text" name="input"/>
+            <p>@Model?.Result</p>
+            <button type="submit" class="btn btn-primary">Gửi</button>
+        </form>
+</div>*@
+<!DOCTYPE html>
+<html>
+  <head>
+    @*<style>
+      body {
+        font-family: Arial, sans-serif;
+        font-size: 16px;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+      }
+      h1 {
+        text-align: center;
+        margin-top: 20px;
+      }
+      form {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      label {
+        display: block;
+        margin-bottom: 10px;
+      }
+      input[type="text"] {
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+      }
+      button {
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      button:hover {
+        background-color: #3e8e41;
+      }
+      #chat-log {
+        margin: 20px auto;
+        padding: 20px;
+        max-width: 600px;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow-y: scroll;
+        height: 300px;
+      }
+      #chat-log strong {
+        font-weight: bold;
+      }
+      .typing-indicator {
+        display: none;
+        margin-top: 10px;
+        position: relative;
+        height: 16px;
+        overflow: hidden;
+        animation: typing 1s infinite;
+        animation-delay: 1s;
+      }
+      .typing-indicator span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 0;
+        height: 100%;
+        background-color: #ccc;
+      }
+      .typing-indicator span:nth-child(1) {
+        width: 20%;
+        animation: typing 1s infinite;
+        animation-delay: 0s;
+      }
+      .typing-indicator span:nth-child(2) {
+        width: 20%;
+        animation: typing 1s infinite;
+        animation-delay: 0.2s;
+      }
+      .typing-indicator span:nth-child(3) {
+        width: 20%;
+        animation: typing 1s infinite;
+        animation-delay: 0.4s;
+      }
+    </style>*@
+    <link href="~/css/chatgpt.css" rel="stylesheet"/>
+
+  </head>
+  <body>
+    <h1>ChatGPT Demo</h1>
+    <form>
+      <label for="question">Bạn muốn hỏi gì?</label>
+      <input type="text" id="question" name="question" />
+      <button type="submit" id="submit-btn">Gửi</button>
+    </form>
+    <div id="chat-log"></div>
+    <div class="typing-indicator">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#submit-btn").on("click", function (e) {
+          e.preventDefault();
+          var question = $("#question").val();
+          if (question.trim() !== "") {
+            $("#chat-log").append(
+              "<p><strong>Bạn: </strong>" + question + "</p>"
+            );
+            $("#question").val("");
+            $("#chat-log").scrollTop($("#chat-log")[0].scrollHeight);
+            $(".typing-indicator").show();
+            setTimeout(function () {
+            $.ajax({
+              url: "https://api.openai.com/v1/chat/completions",
+              type: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization:
+                  "Bearer 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",
+              },
+              data: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: [
+                  {
+                    role: "user",
+                    content: question,
+                  },
+                ],
+              }),
+              success: function (response) {
+                var answer = response.choices[0].message.content;
+                $(".typing-indicator").hide();
+                $("#chat-log").append(
+                  "<p><strong>ChatGPT: </strong>" + answer + "</p>"
+                );
+                $("#chat-log").scrollTop($("#chat-log")[0].scrollHeight);
+              },
+            });
+            }, 1500);
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

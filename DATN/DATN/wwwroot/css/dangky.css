@@ -1,0 +1,80 @@
+﻿html, body {
+    width: 100%;
+    background-image: url("images/xatudan.jpg");
+}
+
+.box {
+    text-align: center;
+    background: #181818;
+    width: 400px;
+    height: auto;
+    padding: 25px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    box-shadow: 0px 0px 20px 0px #000;
+    opacity: 0.9;
+}
+
+    .box h1 {
+        color: #fff;
+    }
+
+    .box input{
+        background: none;
+        outline: none;
+        width: 210px;
+        height: 40px;
+        border-radius: 40px;
+        padding: 0px 15px;
+        margin: 15px 0px;
+        border: solid 2px #002cff;
+        transition: 0.5s;
+        color : aliceblue;
+    }
+    .box select {
+        background: none;
+        outline: none;
+        width: 250px;
+        height: 40px;
+        border-radius: 40px;
+        padding: 0px 15px;
+        margin: 15px 0px;
+        border: solid 2px #002cff;
+        transition: 0.5s;
+        color: aliceblue;
+    }
+        .box select option {
+            background: #181818;
+        }
+    .box a {
+        color: aliceblue;
+    }
+    .box span {
+        color: darkred;
+    }
+
+        .box input:focus {
+            width: 320px;
+            border-color: chartreuse;
+            transition: 0.5s;
+        }
+
+    .box input[type="submit"] {
+        background: none;
+        outline: none;
+        width: 160px;
+        height: 40px;
+        border-radius: 40px;
+        margin: 15px 0px;
+        border: solid 2px #002cff;
+        color: #fff;
+        font-size: 18px;
+        transition: 0.5s;
+    }
+
+        .box input[type="submit"]:hover {
+            background: #002cff;
+            transition: 1s;
+        }

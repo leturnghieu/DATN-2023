@@ -1,0 +1,18 @@
+﻿@using Microsoft.AspNetCore.Http
+@using DATN.DTOs
+@model HinhAnhRequest
+@{
+   ViewBag.Title = "Cập nhật hình ảnh";
+}
+
+<div class="col-md-4 pt-4">
+    <h3>Cập nhật hình ảnh</h3>
+    <form enctype="multipart/form-data" asp-action="ThemHinhAnh" asp-controller="Auths" method="post" >
+        <input type="hidden" value="@ViewBag.MaNguoiDung"/>
+        <p>
+            <label>Chọn ảnh</label>
+            <input asp-for="fileAnh" type="file" />
+        </p>
+        <button class="btn btn-xs btn-success">Upload</button>
+    </form>
+</div>

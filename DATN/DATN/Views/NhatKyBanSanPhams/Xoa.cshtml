@@ -1,0 +1,14 @@
+﻿@model DATN.Models.NhatKyBanSanPham
+<html>
+<body>
+    <form asp-action="XacNhanXoa" method="post">
+        <div>
+            Bạn có chắc muốn xóa nhật ký bán sản phẩm @Model?.NhatKyThuHoach.KhuVuc.SanPham???
+        </div>
+        <div>
+            <a asp-action="DanhSachNhatKyBanSanPham" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-danger" asp-route-id="@Model?.MaNhatKyBanSanPham">Xóa</button>
+        </div>
+    </form>
+</body>
+</html>

@@ -1,0 +1,67 @@
+﻿@using DATN.DTOs
+@model NhatKyMuaSam
+
+@{
+    ViewData["Title"] = "Sửa nhật ký mua sắm";
+}
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Sửa nhật ký mua sắm</h4>
+        <form asp-action="Sua" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="MaLoaiVatTu" class="control-label">Loại vật tư</label>
+                <select asp-for="MaLoaiVatTu" class="form-control" asp-items="ViewBag.MaLoai">
+                    <option selected>---Chọn loại vật tư---</option>
+                </select>
+                <span asp-validation-for="MaLoaiVatTu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaKhoVatTu" class="control-label">Kho lưu trữ</label>
+                <select asp-for="MaKhoVatTu" class="form-control" asp-items="ViewBag.MaKho">
+                    <option selected>---Chọn kho vật tư---</option>
+                </select>
+                <span asp-validation-for="MaKhoVatTu" class="text-danger"></span>
+                <p>Nếu chưa có kho hãy <a asp-action="ThemMoiKhoVatTu" asp-controller="KhoVatTus" class="btn btn-dark">Thêm mới kho</a></p>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenVatTu" class="control-label">Tên vật tư</label>
+                <input asp-for="TenVatTu" class="form-control" />
+                <span asp-validation-for="TenVatTu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuong" class="control-label">Số lượng</label>
+                <input asp-for="SoLuong" class="form-control" />
+                <span asp-validation-for="SoLuong" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Gia" class="control-label">Giá</label>
+                <input asp-for="Gia" class="form-control" />
+                <span asp-validation-for="Gia" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="XuatXu" class="control-label">Xuất xứ</label>
+                <input asp-for="XuatXu" class="form-control" />
+                <span asp-validation-for="XuatXu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgaySanXuat" class="control-label">Ngày sản xuất</label>
+                <input asp-for="NgaySanXuat" class="form-control" type="datetime-local" />
+                <span asp-validation-for="NgaySanXuat" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HanSuDung" class="control-label">Hạn sử dụng</label>
+                <input asp-for="HanSuDung" class="form-control" type="datetime-local" />
+                <span asp-validation-for="HanSuDung" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachNhatKyMuaSam">Quay lại</a>
+</div>

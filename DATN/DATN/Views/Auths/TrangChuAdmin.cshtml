@@ -1,0 +1,69 @@
+﻿@{
+    Layout = "_LayoutManage";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="~/css/chatgpt.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h1>ChatGPT Demo</h1>
+    <form>
+        <label for="question">Bạn muốn hỏi gì?</label>
+        <input type="text" id="question" name="question" />
+        <button type="submit" id="submit-btn">Gửi</button>
+    </form>
+    <div id="chat-log"></div>
+    <div class="typing-indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#submit-btn").on("click", function (e) {
+                e.preventDefault();
+                var question = $("#question").val();
+                if (question.trim() !== "") {
+                    $("#chat-log").append(
+                        "<p><strong>Bạn: </strong>" + question + "</p>"
+                    );
+                    $("#question").val("");
+                    $("#chat-log").scrollTop($("#chat-log")[0].scrollHeight);
+                    $(".typing-indicator").show();
+                    setTimeout(function () {
+                        $.ajax({
+                            url: "https://api.openai.com/v1/chat/completions",
+                            type: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                Authorization:
+                                    "Bearer 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",
+                            },
+                            data: JSON.stringify({
+                                model: "gpt-3.5-turbo",
+                                messages: [
+                                    {
+                                        role: "user",
+                                        content: question,
+                                    },
+                                ],
+                            }),
+                            success: function (response) {
+                                var answer = response.choices[0].message.content;
+                                $(".typing-indicator").hide();
+                                $("#chat-log").append(
+                                    "<p><strong>ChatGPT: </strong>" + answer + "</p>"
+                                );
+                                $("#chat-log").scrollTop($("#chat-log")[0].scrollHeight);
+                            },
+                        });
+                    }, 1500);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

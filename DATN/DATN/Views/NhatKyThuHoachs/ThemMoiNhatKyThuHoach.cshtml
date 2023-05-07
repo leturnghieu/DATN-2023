@@ -1,0 +1,39 @@
+﻿@using DATN.DTOs
+@model NhatKyThuHoachRequest
+
+@{
+    ViewData["Title"] = "Thêm nhật ký thu hoạch";
+}
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Thêm mới nhật ký thu hoạch</h4>
+        <form asp-action="ThemMoiNhatKyThuHoach" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="MaKhuVuc" class="control-label">Khu vực</label>
+                <select asp-for="MaKhuVuc" asp-items="ViewBag.MaKhuVuc" class="form-control">
+                    <option selected>---Chọn khu vực---</option>
+                </select>
+                <span asp-validation-for="MaKhuVuc" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongThuHoach" class="control-label">Số lượng thu hoạch</label>
+                <input asp-for="SoLuongThuHoach" class="form-control" />
+                <span asp-validation-for="SoLuongThuHoach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NgayThuHoach" class="control-label">Ngày thu hoạch</label>
+                <input asp-for="NgayThuHoach" class="form-control" />
+                <span asp-validation-for="NgayThuHoach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachNhatKyThuHoach">Quay lại</a>
+</div>

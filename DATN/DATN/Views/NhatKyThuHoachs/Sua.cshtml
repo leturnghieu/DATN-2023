@@ -1,0 +1,31 @@
+﻿@using DATN.DTOs
+@model NhatKyThuHoachEditRequest
+
+@{
+    ViewData["Title"] = "Sửa nhật ký thu hoạch";
+}
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Sửa nhật ký thu hoạch</h4>
+        <form asp-action="Sua" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="SoLuongThuHoach" class="control-label">Số lượng thu hoạch</label>
+                <input asp-for="SoLuongThuHoach" class="form-control" />
+                <span asp-validation-for="SoLuongThuHoach" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SoLuongDaBan" class="control-label">Đã bán</label>
+                <input asp-for="SoLuongDaBan" class="form-control" disabled/>
+                <span asp-validation-for="SoLuongDaBan" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachNhatKyThuHoach">Quay lại</a>
+</div>

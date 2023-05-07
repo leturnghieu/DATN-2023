@@ -1,0 +1,86 @@
+﻿@model PaginatedResponse<NguoiDung>
+@{
+    ViewData["Title"] = "Danh sách người dùng";
+    var data = new ViewDataDictionary(ViewData)
+    {
+        {
+            "ActionName", "DanhSachNguoiDung"
+        },
+        {
+            "ControllerName", "NguoiDungs"
+        }
+    };
+    Layout = "_LayoutManage";
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Danh sách người dùng</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a class="btn btn-success" asp-action="ThemMoiNguoiDung" asp-controller="NguoiDungs">Thêm người dùng mới</a>
+    </div>
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800"></h1>
+        <a asp-action="ExportToExcel" asp-controller="NguoiDungs" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i>Tải báo cáo
+        </a>
+    </div>
+    
+    <div class="d-flex">
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="DanhSachNguoiDung" asp-controller="NguoiDungs">
+            <div class="input-group">
+                <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Tìm theo tên người dùng ..."
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @await Html.PartialAsync("_PaginationPartial", Model, data)
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên người dùng</th>
+                        <th>Email</th>
+                        <th>Giới tính</th>
+                        <th>Diện tích cơ sở nuôi trồng</th>
+                        <th>Diện tích đã sử dụng</th>
+                        <th>Địa chỉ</th>
+                        <th>Khu vực quản lý</th>
+                        <th>Vật tư đã mua</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @{
+                    foreach (var item in Model.Items)
+                    {
+                        var maKV = @item.MaNguoiDung;
+                        <tbody>
+                            <tr>
+                                <td>@item.TenNguoiDung</td>
+                                <td>@item.Email</td>
+                                <td>@item.GioiTinh</td>
+                                <td>@item.CoSoNuoiTrong.DienTich</td>
+                                <td>@item.CoSoNuoiTrong.DienTichDaSuDung</td>
+                                <td>@item.CoSoNuoiTrong.DiaChi</td>
+                                <td>@item.KhuVucs.Count khu vực</td>
+                                <td>@item.NhatKyMuaSams.Count vật tư</td>
+                                <td>
+                                    <a class="btn btn-info" asp-action="ChiTiet" asp-controller="NguoiDungs" asp-route-id="@item.MaNguoiDung">Chi tiết</a>
+                                    <a class="btn btn-primary" asp-action="Sua" asp-controller="NguoiDungs" asp-route-id="@item.MaNguoiDung">Sửa</a>
+                                    <a class="btn btn-danger" asp-action="Xoa" asp-controller="NguoiDungs" asp-route-id="@item.MaNguoiDung">Xóa</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+﻿@model PaginatedResponse<NhatKyThuHoach>
+@{
+    ViewData["Title"] = "Danh sách nhật ký thu hoạch";
+    var data = new ViewDataDictionary(ViewData)
+    {
+        {
+            "ActionName", "DanhSachNhatKyThuHoach"
+        },
+        {
+            "ControllerName", "NhatKyThuHoachs"
+        }
+    };
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Danh sách nhật ký thu hoạch</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a class="btn btn-success" asp-action="ThemMoiNhatKyThuHoach" asp-controller="NhatKyThuHoachs">Thêm nhật ký thu hoạch mới</a>
+    </div>
+    <div class="d-flex">
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="DanhSachNhatKyThuHoach" asp-controller="NhatKyThuHoachs">
+            <div class="input-group">
+                <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Tìm theo tên sản phẩm ..."
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @await Html.PartialAsync("_PaginationPartial", Model, data)
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng thu hoạch</th>
+                        <th>Số lượng đã bán</th>
+                        <th>Ngày thu hoạch</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @{
+                    foreach (var item in Model.Items)
+                    {
+                        var maKV = @item.MaNhatKyThuHoach;
+                        <tbody>
+                            <tr>
+                                <td>@item.KhuVuc.SanPham</td>
+                                <td>@item.SoLuongThuHoach</td>
+                                <td>@item.SoLuongDaBan</td>
+                                <td>@item.NgayThuHoach.ToString("dd-MM-yyyy")</td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Sua" asp-controller="NhatKyThuHoachs" asp-route-id="@item.MaNhatKyThuHoach">Sửa</a>
+                                    <a class="btn btn-danger" asp-action="Xoa" asp-controller="NhatKyThuHoachs" asp-route-id="@item.MaNhatKyThuHoach">Xóa</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

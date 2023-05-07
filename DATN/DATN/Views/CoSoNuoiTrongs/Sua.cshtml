@@ -1,0 +1,36 @@
+﻿@model DATN.DTOs.CoSoNuoiTrongRequest
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "_LayoutManage";
+}
+
+<h1>Chỉnh sửa cơ sở nuôi trồng</h1>
+
+<h4>Cơ sở nuôi trồng</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Sua" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MaCoSoNuoiTrong" />
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Địa chỉ</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienTich" class="control-label">Diện tích</label>
+                <input asp-for="DienTich" class="form-control" />
+                <span asp-validation-for="DienTich" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Lưu" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="DanhSachCoSoNuoiTrong" class="btn btn-primary">Quay lại danh sách</a>
+</div>

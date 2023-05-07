@@ -1,0 +1,51 @@
+﻿@using DATN.DTOs
+@model DangKyRequest
+
+@{
+    ViewData["Title"] = "Thêm mới người dùng";
+    Layout = "_LayoutManage";
+}
+<hr />
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Thêm mới người dùng</h4>
+        <form asp-action="ThemMoiNguoiDung" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group">
+                <label asp-for="MaCoSoNuoiTrong" class="control-label">Cơ sở nuôi trồng</label>
+                <select asp-for="MaCoSoNuoiTrong" asp-items="ViewBag.MaCoSoNuoiTrong" class="form-control">
+                    <option selected>---Chọn cơ sở nuôi trồng---</option>
+                </select>
+                <span asp-validation-for="MaCoSoNuoiTrong" class="text-danger"></span>
+                <p id="sl"></p>
+            </div>
+            <div class="form-group">
+                <label asp-for="TenNguoiDung" class="control-label">Tên người dùng</label>
+                <input asp-for="TenNguoiDung" class="form-control" />
+                <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email người dùng</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MatKhau" class="control-label">Mật khẩu</label>
+                <input asp-for="MatKhau" class="form-control" type="password" />
+                <span asp-validation-for="MatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NhapLaiMatKhau" class="control-label">Nhập lại mật khẩu</label>
+                <input asp-for="NhapLaiMatKhau" class="form-control" type="password" />
+                <span asp-validation-for="NhapLaiMatKhau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachNguoiDung">Quay lại</a>
+</div>

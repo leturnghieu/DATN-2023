@@ -1,0 +1,72 @@
+﻿@model PaginatedResponse<NhatKyBanSanPham>
+@{
+    ViewData["Title"] = "Danh sách nhật ký bán sản phẩm";
+    var data = new ViewDataDictionary(ViewData)
+    {
+        {
+            "ActionName", "DanhSachNhatKyBanSanPham"
+        },
+        {
+            "ControllerName", "NhatKyBanSanPhams"
+        }
+    };
+}
+<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+<link rel="stylesheet" href="~/css/thumbnail.css"/>
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Danh sách nhật ký bán sản phẩm</h1>
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <a class="btn btn-success" asp-action="ThemMoiNhatKyBanSanPham" asp-controller="NhatKyBanSanPhams">Thêm nhật ký bán sản phẩm mới</a>
+    </div>
+    <div class="d-flex">
+        <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" asp-action="DanhSachNhatKyBanSanPham" asp-controller="NhatKyBanSanPhams">
+            <div class="input-group">
+                <input name="search" type="text" class="form-control bg-light border-0 small" placeholder="Tìm theo tên sản phẩm ..."
+                       aria-label="Search" aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-info" type="submit">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            @await Html.PartialAsync("_PaginationPartial", Model, data)
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng bán</th>
+                        <th>Giá bán</th>
+                        <th>Ngày bán</th>
+                        <th>Mã QR</th>
+                        <th>Chức năng</th>
+                    </tr>
+                </thead>
+                @{
+                    foreach (var item in Model.Items)
+                    {
+                        var maKV = @item.MaNhatKyBanSanPham;
+                        <tbody>
+                            <tr>
+                                <td>@item.NhatKyThuHoach.KhuVuc.SanPham</td>
+                                <td>@item.SoLuong</td>
+                                <td>@item.GiaBan</td>
+                                <td>@item.NgayBan.ToString("dd-MM-yyyy")</td>
+                                <td><img src="@item.QRCode" height="100" width="100"/></td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Sua" asp-controller="NhatKyBanSanPhams" asp-route-id="@item.MaNhatKyBanSanPham">Sửa</a>
+                                    <a class="btn btn-danger" asp-action="Xoa" asp-controller="NhatKyBanSanPhams" asp-route-id="@item.MaNhatKyBanSanPham">Xóa</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>

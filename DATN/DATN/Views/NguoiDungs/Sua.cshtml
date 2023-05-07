@@ -1,0 +1,68 @@
+﻿@model DATN.DTOs.NguoiDungRequest
+@{
+    Layout = "_LayoutManage";
+}
+<div class="container-xl px-4 mt-4">
+
+    <nav class="nav nav-borders">
+        <a class="nav-link active ms-0" href="https://www.bootdey.com/snippets/view/bs5-edit-profile-account-details" target="__blank">Profile</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="row">
+        <div class="col-xl-8">
+
+            <div class="card mb-4">
+                <div class="card-header">Chỉnh sửa người dùng</div>
+                <div class="card-body">
+                    <form method="post" asp-action="Sua" asp-controller="NguoiDungs">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputUsername">Tên người dùng</label>
+                            <input class="form-control" id="inputUsername" type="text" placeholder="Nhập tên người dùng" asp-for="TenNguoiDung">
+                            <span asp-validation-for="TenNguoiDung" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Địa chỉ Email</label>
+                            <input class="form-control" id="inputEmailAddress" type="email" placeholder="Nhập Email" asp-for="Email">
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="small mb-1" for="inputEmailAddress">Giới tính</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="flexRadioDefault1" asp-for="GioiTinh" checked value="0" />
+                                <label class="form-check-label" for="flexRadioDefault1">
+                                    Nam
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" id="flexRadioDefault2" asp-for="GioiTinh" value="1" />
+                                <label class="form-check-label" for="flexRadioDefault2">
+                                    Nữ
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row gx-3 mb-3">
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputPhone">Số điên thoại</label>
+                                <input class="form-control" id="inputPhone" type="tel" placeholder="Nhập số điện thoại" asp-for="SDT">
+                                <span asp-validation-for="SDT" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="small mb-1" for="inputBirthday">Ngày tháng năm sinh</label>
+                                <input class="form-control" id="inputBirthday" type="datetime-local" placeholder="Nhập ngày tháng năm sinh" asp-for="NgaySinh">
+                                <span asp-validation-for="NgaySinh" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" type="submit">Lưu & Thay đổi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

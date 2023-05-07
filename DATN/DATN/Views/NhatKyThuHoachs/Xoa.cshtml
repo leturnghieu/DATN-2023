@@ -1,0 +1,14 @@
+﻿@model DATN.Models.NhatKyThuHoach
+<html>
+<body>
+    <form asp-action="XacNhanXoa" method="post">
+        <div>
+            Bạn có chắc muốn xóa nhật ký thu hoạch @Model?.KhuVuc?.SanPham.???
+        </div>
+        <div>
+            <a asp-action="DanhSachNhatKyThuHoach" class="btn btn-secondary">Hủy</a>
+            <button type="submit" class="btn btn-danger" asp-route-id="@Model?.MaNhatKyThuHoach">Xóa</button>
+        </div>
+    </form>
+</body>
+</html>

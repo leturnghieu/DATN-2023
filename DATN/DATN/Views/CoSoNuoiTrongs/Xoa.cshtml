@@ -1,0 +1,17 @@
+﻿@model DATN.Models.CoSoNuoiTrong
+@{
+    Layout = "_LayoutManage";
+}
+<html>
+    <body>
+        <form asp-action="XacNhanXoa" method="post">
+            <div>
+                Bạn có chắc muốn xóa cơ sở nuôi trồng tại @Model?.DiaChi???
+            </div>
+            <div>
+                <a asp-action="DanhSachCoSoNuoiTrong" class="btn btn-secondary">Hủy</a>
+                <button type="submit" class="btn btn-danger" asp-route-id="@Model?.MaCoSoNuoiTrong">Xóa</button>
+            </div>
+        </form>
+    </body>
+</html>

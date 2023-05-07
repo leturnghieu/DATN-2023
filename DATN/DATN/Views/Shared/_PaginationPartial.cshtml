@@ -1,0 +1,107 @@
+﻿@{
+    var actionName = ViewData["ActionName"];
+    var controller = ViewData["ControllerName"];
+}
+<nav>
+    <ul class="pagination d-flex justify-content-end">
+        @if (Model.TotalPages <= 3 && Model.TotalPages >= 1)
+        {
+            <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="1">Đầu trang</a>
+            </li>
+            <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex - 1)">Trước</a>
+            </li>
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+                <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@i">@i</a>
+                </li>
+            }
+            <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex + 1)">Sau</a>
+            </li>
+            <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@Model.TotalPages">Cuối trang</a>
+            </li>
+        }
+        else if (Model.TotalPages > 3)
+        {
+            if (Model.PageIndex < 3)
+            {
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="1">Đầu trang</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex - 1)">Trước</a>
+                </li>
+                for (int i = 1; i <= 3; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a class="page-link">...</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex + 1)">Sau</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@Model.TotalPages">Cuối trang</a>
+                </li>
+            }
+            else if (Model.PageIndex >= 3 && Model.PageIndex <= Model.TotalPages - 2)
+            {
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="1">Đầu trang</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex - 1)">Trước</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">...</a>
+                </li>
+                for (int i = Model.PageIndex; i <= Model.PageIndex + 2; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item">
+                    <a class="page-link">...</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex + 1)">Sau</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@Model.TotalPages">Cuối trang</a>
+                </li>
+            }
+            else if (Model.PageIndex > (Model.TotalPages - 2))
+            {
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="1">Đầu trang</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == 1 ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex - 1)">Trước</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link">...</a>
+                </li>
+                for (int i = Model.TotalPages - 2; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.PageIndex ? "active" : "")">
+                        <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@i">@i</a>
+                    </li>
+                }
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@(Model.PageIndex + 1)">Sau</a>
+                </li>
+                <li class="page-item @(Model.PageIndex == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link" asp-action="@actionName" asp-controller="@controller" asp-route-pageIndex="@Model.TotalPages">Cuối trang</a>
+                </li>
+            }
+        }
+    </ul>
+</nav>

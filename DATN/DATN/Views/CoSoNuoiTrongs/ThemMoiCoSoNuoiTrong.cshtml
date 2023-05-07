@@ -1,0 +1,32 @@
+﻿@using DATN.DTOs
+@model CoSoNuoiTrongRequest
+
+@{
+    ViewData["Title"] = "Thêm cơ sở nuôi trồng";
+    Layout = "_LayoutManage";
+}
+<hr />
+<div class="row"> 
+    <div class="col-sm-6">
+        <h4>Thêm mới cơ sở nuôi trồng</h4>
+        <form asp-action="ThemMoiCoSoNuoiTrong" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DiaChi" class="control-label">Địa chỉ cơ sở nuôi trồng</label>
+                <input asp-for="DiaChi" class="form-control" />
+                <span asp-validation-for="DiaChi" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DienTich" class="control-label">Diện tích</label>
+                <input asp-for="DienTich" class="form-control" />
+                <span asp-validation-for="DienTich" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Thêm mới" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<div>
+    <a asp-action="DanhSachCoSoNuoiTrong">Quay lại</a>
+</div>
