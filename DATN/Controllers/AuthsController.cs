@@ -22,21 +22,19 @@ namespace DATN.Controllers
     public class AuthsController : Controller
     {
         private readonly INguoiDung _nguoiDungService;
-        private readonly IChatGPT _chatGPTService;
         private readonly IMapper _mapper;
         private readonly INhatKyMuaSam _nhatKyMuaSam;
         private readonly INhatKyBanSanPham _nhatKyBanSanPham;
         private readonly IKhuVuc _khuVuc;
         private readonly IConfiguration _configuration;
 
-        public AuthsController(INguoiDung nguoiDungService, IChatGPT ChatGPTService, IMapper mapper,
+        public AuthsController(INguoiDung nguoiDungService, IMapper mapper,
             INhatKyMuaSam nhatKyMuaSam,
             INhatKyBanSanPham nhatKyBanSanPham,
             IKhuVuc khuVuc,
             IConfiguration configuration)
         {
             _nguoiDungService = nguoiDungService;
-            _chatGPTService = ChatGPTService;
             _mapper = mapper;
             _nhatKyMuaSam = nhatKyMuaSam;
             _nhatKyBanSanPham = nhatKyBanSanPham;
@@ -136,11 +134,6 @@ namespace DATN.Controllers
             return RedirectToAction("DangNhap");
         }
 
-        [HttpPost]
-        public async Task<IActionResult> TrangChu(string? input)
-        {
-            return View("TrangChu", await _chatGPTService.Ask(input));
-        }
         public async Task<IActionResult> ChiTiet(int id)
         {
             if(HttpContext.Session.GetUserName() != null)

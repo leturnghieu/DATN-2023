@@ -35,7 +35,6 @@ builder.Services.AddSession(options =>
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<INguoiDung, NguoiDungService>();
 builder.Services.AddScoped<IKhuVuc, KhuVucService>();
-builder.Services.AddScoped<IChatGPT, ChatGPTService>();
 builder.Services.AddScoped<IKhoVatTu, KhoVatTuService>();
 builder.Services.AddScoped<INhatKyMuaSam, NhatKyMuaSamService>();
 builder.Services.AddScoped<INhatKySanXuat, NhatKySanXuatService>();
