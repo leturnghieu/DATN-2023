@@ -27,11 +27,13 @@ namespace DATN.Controllers
         private readonly INhatKyMuaSam _nhatKyMuaSam;
         private readonly INhatKyBanSanPham _nhatKyBanSanPham;
         private readonly IKhuVuc _khuVuc;
+        private readonly IConfiguration _configuration;
 
         public AuthsController(INguoiDung nguoiDungService, IChatGPT ChatGPTService, IMapper mapper,
             INhatKyMuaSam nhatKyMuaSam,
             INhatKyBanSanPham nhatKyBanSanPham,
-            IKhuVuc khuVuc)
+            IKhuVuc khuVuc,
+            IConfiguration configuration)
         {
             _nguoiDungService = nguoiDungService;
             _chatGPTService = ChatGPTService;
@@ -39,6 +41,7 @@ namespace DATN.Controllers
             _nhatKyMuaSam = nhatKyMuaSam;
             _nhatKyBanSanPham = nhatKyBanSanPham;
             _khuVuc = khuVuc;
+            _configuration = configuration;
         }
 
         // GET: Auths
@@ -127,6 +130,7 @@ namespace DATN.Controllers
                 ViewBag.TongTienMuaSam = _nhatKyMuaSam.TongSoTienMuaSam(csntId);
                 ViewBag.TongTienBanSanPham = _nhatKyBanSanPham.TongTienBanSanPham(csntId);
                 ViewBag.TongVatTuHetHan = _nhatKyMuaSam.TongSoVatTuHetHan(csntId);
+                ViewBag.ApiKey = _configuration["ApiKey"];
                 return View();
             }
             return RedirectToAction("DangNhap");
@@ -204,6 +208,7 @@ namespace DATN.Controllers
 
         public IActionResult TrangChuAdmin()
         {
+            ViewBag.ApiKey = _configuration["ApiKey"];
             return View("TrangChuAdmin");
         }
     }

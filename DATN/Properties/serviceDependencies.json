@@ -4,6 +4,10 @@
       "type": "mssql",
       "connectionId": "ConnectionStrings:ConnectString",
       "dynamicId": null
+    },
+    "identityapp1": {
+      "type": "identityapp",
+      "dynamicId": null
     }
   }
 }
