@@ -28,10 +28,10 @@ namespace DATN.Services.Service
             return await _dbContext.KhoVatTus.ToListAsync();
         }
 
-        public async Task<IEnumerable> DanhSachVatTu(int warehouse)
+        public async Task<IEnumerable> DanhSachVatTu(int warehouse, int csntId)
         {
-            var vatTus = await _dbContext.NhatKyMuaSams.Where(c => c.MaKhoVatTu == warehouse).ToListAsync();
-            return vatTus ;
+            var vatTus = await _dbContext.NhatKyMuaSams.Include(c => c.NguoiDung).Where(c => c.MaKhoVatTu == warehouse && c.NguoiDung.MaCoSoNuoiTrong == csntId).ToListAsync();
+            return vatTus;
         }
 
         public async Task<PaginatedResponse<NhatKySanXuat>> DanhSachNhatKySanXuat(string? search = null, int? pageIndex = 1, int? maCSNT = null)
@@ -68,17 +68,17 @@ namespace DATN.Services.Service
             return null;
         }
 
-        public async Task<NhatKySanXuat?> ThemMoiNhatKySanXuat(NhatKySanXuatRequest request)
+        public async Task<NhatKySanXuat?> ThemMoiNhatKySanXuat(NhatKySanXuatRequest request, int csntId)
         {
-            var nkms = await _dbContext.NhatKyMuaSams.FirstOrDefaultAsync(c => c.TenVatTu == request.TenVatTu);
+            var nkms = await _dbContext.NhatKyMuaSams.Include(c => c.NguoiDung).FirstOrDefaultAsync(c => c.TenVatTu == request.TenVatTu && c.NguoiDung.MaCoSoNuoiTrong == csntId);
             var nksxAdd = _mapper.Map<NhatKySanXuat>(request);
             
             
-            if(nkms.SoLuong >= (TongSoLuongVatTuDaSuDung(request.TenVatTu) + request.SoLuongSuDung))
+            if(nkms.SoLuong >= (TongSoLuongVatTuDaSuDung(request.TenVatTu, csntId) + request.SoLuongSuDung))
             {
                 _dbContext.Add(nksxAdd);
                 await _dbContext.SaveChangesAsync();
-                nkms.SoLuongDaSuDung = TongSoLuongVatTuDaSuDung(request.TenVatTu);
+                nkms.SoLuongDaSuDung = TongSoLuongVatTuDaSuDung(request.TenVatTu, csntId);
                 _dbContext.Update(nkms);
                 await _dbContext.SaveChangesAsync();
             }
@@ -91,13 +91,13 @@ namespace DATN.Services.Service
 
         public async Task<NhatKySanXuat?> Tim(Expression<Func<NhatKySanXuat, bool>>? filter = null)
         {
-            return await _dbContext.NhatKySanXuats.Include(c => c.KhoVatTu).Include(c => c.KhuVuc).FirstOrDefaultAsync(filter);
+            return await _dbContext.NhatKySanXuats.Include(c => c.KhoVatTu).Include(c => c.KhuVuc).ThenInclude(c => c.NguoiDung).FirstOrDefaultAsync(filter);
         }
 
-        public async Task<NhatKySanXuat?> XoaNhatKySanXuat(int id)
+        public async Task<NhatKySanXuat?> XoaNhatKySanXuat(int id, int csntId)
         {
             var nksx = await _dbContext.NhatKySanXuats.FirstOrDefaultAsync(c => c.MaNhatKySanXuat == id);
-            var nkms = await _dbContext.NhatKyMuaSams.FirstOrDefaultAsync(c => c.TenVatTu == nksx.TenVatTu);
+            var nkms = await _dbContext.NhatKyMuaSams.Include(c => c.NguoiDung).FirstOrDefaultAsync(c => c.TenVatTu == nksx.TenVatTu && c.NguoiDung.MaCoSoNuoiTrong == csntId);
             if (nksx == null)
             {
                 return null;
@@ -109,9 +109,9 @@ namespace DATN.Services.Service
             return nksx;
         }
 
-        public int TongSoLuongVatTuDaSuDung(string tenVatTu)
+        public int TongSoLuongVatTuDaSuDung(string tenVatTu, int csntId)
         {
-            var listVatTu = _dbContext.NhatKySanXuats.Where(c => c.TenVatTu == tenVatTu).ToList();
+            var listVatTu = _dbContext.NhatKySanXuats.Include(c => c.KhuVuc).ThenInclude(c => c.NguoiDung).Where(c => c.TenVatTu == tenVatTu && c.KhuVuc.NguoiDung.MaCoSoNuoiTrong == csntId).ToList();
             int tong = 0;
             foreach(var item in listVatTu)
             {

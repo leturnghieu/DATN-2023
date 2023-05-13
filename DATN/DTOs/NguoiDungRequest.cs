@@ -11,9 +11,6 @@ namespace DATN.DTOs
         [Required(ErrorMessage = "Không được bỏ trống!")]
         public string? TenNguoiDung { get; set; }
         public GioiTinh GioiTinh { get; set; }
-        [Required(ErrorMessage = "Không được bỏ trống!")]
-        [EmailAddress(ErrorMessage = "Phải đúng định dạng Email!")]
-        public string? Email { get; set; }
         [PhoneNumber(ErrorMessage = "Giá trị không phải là số điện thoại!")]
         [DataType(DataType.PhoneNumber, ErrorMessage = "Giá trị không phải là số điện thoại!")]
         public string? SDT { get; set; }

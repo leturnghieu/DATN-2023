@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +44,8 @@ builder.Services.AddScoped<INhatKyThuHoach, NhatKyThuHoachService>();
 builder.Services.AddScoped<INhatKyBanSanPham, NhatKyBanSanPhamService>();
 builder.Services.AddScoped<ICoSoNuoiTrong, CoSoNuoiTrongService>();
 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

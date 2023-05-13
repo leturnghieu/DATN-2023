@@ -50,7 +50,7 @@ namespace DATN.Services.Service
             var nkbsp = await _dbContext.NhatKyBanSanPhams.FirstOrDefaultAsync(c => c.MaNhatKyBanSanPham == id);
             var nkth = await FindNKTH(nkbsp.MaNhatKyThuHoach);
             var slCon = nkth.SoLuongThuHoach - nkth.SoLuongDaBan;
-            if(request.SoLuong <= slCon)
+            if(request.SoLuong <= (slCon + nkth.SoLuongDaBan))
             {
                 nkbsp.SoLuong = request.SoLuong;
                 nkbsp.GiaBan = request.GiaBan;
@@ -69,13 +69,13 @@ namespace DATN.Services.Service
             var nkth = await _dbContext.NhatKyThuHoaches.Include(c => c.KhuVuc).ThenInclude(c => c.NguoiDung).ThenInclude(c => c.CoSoNuoiTrong).FirstOrDefaultAsync(c => c.MaNhatKyThuHoach == request.MaNhatKyThuHoach);
             var nkbspAdd = _mapper.Map<NhatKyBanSanPham>(request);
             nkbspAdd.NgayBan = DateTime.Now;
-            if (request.SoLuong > nkth.SoLuongThuHoach)
+            if (request.SoLuong > (nkth.SoLuongThuHoach - nkth.SoLuongDaBan))
             {
                 return null;
             }
             var content = $"Cơ sở nuôi trồng: {nkth.KhuVuc.NguoiDung.CoSoNuoiTrong.DiaChi}, Khu vực nuôi trồng : {nkth.KhuVuc.TenKhuVuc}, thời gian trồng : {nkth.KhuVuc.ThoiGianTao}, thời gian thu hoạch : {nkth.NgayThuHoach}";
             nkbspAdd.QRCode = CreateQRCode(content);
-            nkth.SoLuongDaBan = request.SoLuong;
+            nkth.SoLuongDaBan += request.SoLuong;
             _dbContext.Add(nkbspAdd);
             await _dbContext.SaveChangesAsync();
             _dbContext.Update(nkth);

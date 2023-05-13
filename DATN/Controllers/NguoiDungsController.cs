@@ -15,13 +15,15 @@ namespace DATN.Controllers
         private readonly IMapper _mapper;
         private readonly INhatKyMuaSam _nhatKyMuaSam;
         private readonly INhatKyBanSanPham _nhatKyBanSanPham;
+        private readonly IKhuVuc _khuVuc;
 
-        public NguoiDungsController(INguoiDung nguoiDung, IMapper mapper, INhatKyMuaSam nhatKyMuaSam, INhatKyBanSanPham nhatKyBanSanPham)
+        public NguoiDungsController(INguoiDung nguoiDung, IMapper mapper, INhatKyMuaSam nhatKyMuaSam, INhatKyBanSanPham nhatKyBanSanPham, IKhuVuc khuVuc)
         {
             _nguoiDungService = nguoiDung;
             _mapper = mapper;
             _nhatKyMuaSam = nhatKyMuaSam;
             _nhatKyBanSanPham = nhatKyBanSanPham;
+            _khuVuc = khuVuc;
         }
         public async Task<IActionResult> DanhSachNguoiDung(string search, int? pageIndex)
         {
@@ -208,6 +210,36 @@ namespace DATN.Controllers
                 return View();
             }
             return RedirectToAction("TrangChu", "Auths");
+        }
+        public IActionResult ExportUserToExcel()
+        {
+            var csntId = HttpContext.Session.GetInt32("CsntId").GetValueOrDefault();
+            using var package = new ExcelPackage();
+
+            // Add a new worksheet to the package
+            var worksheet = package.Workbook.Worksheets.Add("Sheet1");
+
+            // Add headers to the worksheet
+            worksheet.Cells[1, 1].Value = "Tổng số khu vực nuôi trồng";
+            worksheet.Cells[1, 2].Value = "Tổng tiền mua sắm";
+            worksheet.Cells[1, 3].Value = "Tổng doanh thu";
+            worksheet.Cells[1, 4].Value = "Lợi nhận ước tính";
+            worksheet.Cells[1, 5].Value = "Tổng vật tư hết hạn";
+
+            // Add data to the worksheet
+            worksheet.Cells[2, 1].Value = _khuVuc.TongKhuVuc(csntId);
+            worksheet.Cells[2, 2].Value = _nhatKyMuaSam.TongSoTienMuaSam(csntId);
+            worksheet.Cells[2, 3].Value = _nhatKyBanSanPham.TongTienBanSanPham(csntId);
+            worksheet.Cells[2, 4].Value = _nhatKyBanSanPham.TongTienBanSanPham(csntId) - _nhatKyMuaSam.TongSoTienMuaSam(csntId);
+            worksheet.Cells[2, 5].Value = _nhatKyMuaSam.TongSoVatTuHetHan(csntId);
+
+
+            // Set the content type and file name for the response
+            var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var fileName = "baocaotaichinh.xlsx";
+
+            // Return the Excel file as a download
+            return File(package.GetAsByteArray(), contentType, fileName);
         }
     }
 }

@@ -36,7 +36,6 @@ namespace DATN.Services.Service
             user.TenNguoiDung = request.TenNguoiDung;
             user.NgaySinh = request.NgaySinh;
             user.SDT = request.SDT;
-            user.Email = request.Email;
             user.GioiTinh = request.GioiTinh;
             _dbContext.Update(user);
             await _dbContext.SaveChangesAsync();

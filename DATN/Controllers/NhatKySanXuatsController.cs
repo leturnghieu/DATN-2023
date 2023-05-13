@@ -35,7 +35,8 @@ namespace DATN.Controllers
         {
             if (HttpContext.Session.GetString("UserName") != null)
             {
-                var products = await _nhatKySanXuatService.DanhSachVatTu(warehouse);
+                var csntId = HttpContext.Session.GetInt32("CsntId").GetValueOrDefault();
+                var products = await _nhatKySanXuatService.DanhSachVatTu(warehouse, csntId);
                 return Json(products);
             }
             return RedirectToAction("TrangChu", "Auths");
@@ -63,7 +64,7 @@ namespace DATN.Controllers
                 var userId = HttpContext.Session.GetUserId().GetValueOrDefault();
                 if (ModelState.IsValid)
                 {
-                    var nksx = await _nhatKySanXuatService.ThemMoiNhatKySanXuat(request);
+                    var nksx = await _nhatKySanXuatService.ThemMoiNhatKySanXuat(request, csntId);
                     if(nksx == null)
                     {
                         ViewBag.Message = "Số lượng nhập không hợp lệ!";
@@ -72,6 +73,7 @@ namespace DATN.Controllers
                         ViewBag.MaKhuVuc = new SelectList(await _nhatKySanXuatService.DanhSachKhuVuc(userId), "MaKhuVuc", "TenKhuVuc");
                         return View();
                     }
+                    ViewBag.Message = "Thêm mới thành công nhật ký sản xuất!";
                     return View("DanhSachNhatKySanXUat", await _nhatKySanXuatService.DanhSachNhatKySanXuat(null, 1, csntId));
                 }
                 ViewBag.MaKho = new SelectList(await _nhatKySanXuatService.DanhSachKho(), "MaKhoVatTu", "TenKho");
@@ -97,7 +99,7 @@ namespace DATN.Controllers
             if (HttpContext.Session.GetString("UserName") != null)
             {
                 var csntId = HttpContext.Session.GetInt32("CsntId").GetValueOrDefault();
-                var kho = await _nhatKySanXuatService.XoaNhatKySanXuat(id);
+                var kho = await _nhatKySanXuatService.XoaNhatKySanXuat(id, csntId);
                 if (kho == null)
                 {
                     ViewBag.Message = "Xóa nhật ký sản xuất thất bại!";
