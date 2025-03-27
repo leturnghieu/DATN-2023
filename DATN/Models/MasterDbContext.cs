@@ -19,7 +19,7 @@ namespace DATN.Models
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionBuilder)
         {
-            optionBuilder.UseSqlServer("Server=tcp:edmanage.database.windows.net,1433;Initial Catalog=DbQuanLyNhatKy;Persist Security Info=False;User ID=letrunghieusql;Password=Hieu579926;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30");
+            optionBuilder.UseSqlServer("Data Source=LeTrungHieu;initial catalog=DATN2023;Integrated Security=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
